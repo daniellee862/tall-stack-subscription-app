@@ -9,12 +9,15 @@
 
         <!-- Fontss -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-
+        {{--STYLES--}}
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        @livewireStyles
+        {{--SCRIPTS--}}
         <script src="{{ asset('js/app.js') }}" defer></script>
 
         <!-- Scripts -->
-{{--        @vite(['resources/css/app.css', 'resources/js/app.js'])--}}
+        {{--@vite(['resources/css/app.css', 'resources/js/app.js'])--}}
+
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -32,5 +35,7 @@
                 {{ $slot }}
             </main>
         </div>
+
+       @livewireScripts
     </body>
 </html>
