@@ -2,8 +2,8 @@
     <div
         class="flex flex-col bg-gradient-to-r from-blue-400 to-indigo-600 w-full h-screen"
         x-data="{
-        showSubscribe: false,
-        showSuccess: false
+        showSubscribe: @entangle('showSubscribe'),
+        showSuccess: @entangle('showSuccess'),
         }"
     >
         <nav class="flex pt-5 justify-between container mx-auto text-indigo-200">
@@ -45,16 +45,22 @@
                     type="email"
                     name="email"
                     placeholder="Email address"
-                    wire:model="email"
+                    wire:model.defer="email"
                 >
                 </x-input>
                 <span class="text-gray-100 text-xs mt-2">
-                We will send you a confirmation email.
+                    {{
+                        $errors->has('email')
+                        ? $errors->first('email')
+                        : 'We will send you a confirmation email.'
+                    }}
             </span>
                 <x-button
                     class="px-5 py-3 mt-5 w-80 bg-indigo-500 justify-center"
                 >
-                    Get In!
+                    <span class="animate-spin" wire:loading wire:target="subscribe" >&#9696</span>
+                    <span wire:loading.remove wire:target="subscribe">Get In!</span>
+
                 </x-button>
 
             </form>
@@ -68,9 +74,15 @@
             <p class="text-white text-5xl font-bold text-center mt-12">
                 Great.
             </p>
+            @if(request()->has('verified') && request()->verified == 1 )
+                <p class="text-white text-3xl text-center mt-2">
+                    Subscription confirmed.
+                </p>
+            @else
             <p class="text-white text-3xl text-center mt-2">
                 You have successfully subscribed.
             </p>
+            @endif
         </x-modal>
 
     </div>
